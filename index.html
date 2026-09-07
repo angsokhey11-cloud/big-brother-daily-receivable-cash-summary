@@ -2,74 +2,55 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BIG BROTHER — Daily Receivable Cash Summary V1.1 Data Feed Fix</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>BIG BROTHER — Daily Receivable Cash Collection V2</title>
 <style>
 :root{
   --bg:#f4f7fb;--card:#fff;--line:#dfe6ef;--text:#17304f;--muted:#6d7d91;
-  --blue:#1f5fbf;--blue2:#174b98;--green:#198754;--red:#c93c46;
+  --blue:#1f5fbf;--blue2:#174b98;--green:#198754;--purple:#5b38a0;
   --shadow:0 10px 28px rgba(20,48,82,.08)
 }
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
-body{padding:20px}
-.wrap{max-width:1500px;margin:0 auto}
-.topbar{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:16px}
-.topbar h1{margin:0 0 5px;font-size:28px}
-.subtitle{margin:0;color:var(--muted)}
-.pill{display:inline-flex;align-items:center;padding:8px 12px;border:1px solid #c9d8ec;border-radius:999px;background:#edf5ff;color:#245da8;font-size:12px;font-weight:800}
-.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:16px}
-.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px;box-shadow:var(--shadow)}
-.card small{display:block;color:var(--muted);font-weight:800;margin-bottom:7px}
-.card strong{font-size:23px}
-.panel{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
-.filters{display:grid;grid-template-columns:1fr 1fr 1.1fr 1.1fr auto auto;gap:10px;padding:14px;border-bottom:1px solid var(--line)}
-input,select{width:100%;border:1px solid #cbd6e3;border-radius:9px;padding:10px 11px;font:inherit;color:var(--text);background:#fff}
-.btn{border:0;border-radius:9px;padding:10px 14px;font-weight:800;cursor:pointer}
-.btn.primary{background:var(--blue);color:#fff}
-.btn.primary:hover{background:var(--blue2)}
-.btn.secondary{background:#eef3f8;color:#284761}
-.btn:disabled{opacity:.55;cursor:not-allowed}
+body{padding:18px}
+.wrap{max-width:1600px;margin:0 auto}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:14px}
+.topbar h1{margin:0 0 4px;font-size:27px}.subtitle{margin:0;color:var(--muted);font-size:13px}
+.pill{padding:8px 12px;border-radius:999px;background:#f1edff;color:#5b38a0;border:1px solid #d9cff8;font-size:12px;font-weight:900}
+.cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;box-shadow:var(--shadow)}
+.card small{display:block;color:var(--muted);font-weight:800;font-size:11px;margin-bottom:5px}.card strong{font-size:20px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:13px;box-shadow:var(--shadow);overflow:hidden}
+.filters{display:grid;grid-template-columns:1fr 1fr 1.1fr 1.1fr auto auto;gap:9px;padding:12px;border-bottom:1px solid var(--line)}
+input,select{width:100%;border:1px solid #cbd6e3;border-radius:9px;padding:9px 10px;font:inherit;color:var(--text);background:#fff}
+.btn{border:0;border-radius:8px;padding:9px 12px;font-weight:800;cursor:pointer}.btn.primary{background:var(--blue);color:#fff}.btn.secondary{background:#eef3f8;color:#284761}
 .tablewrap{overflow:auto}
-table{width:100%;border-collapse:collapse;min-width:1120px}
-th,td{padding:11px 10px;border-bottom:1px solid #e7edf4;text-align:left;font-size:13px;white-space:nowrap}
-th{background:#f7f9fc;color:#53657a;font-size:12px;position:sticky;top:0;z-index:1}
-tbody tr:hover{background:#f9fbfe}
-.money{text-align:right;font-variant-numeric:tabular-nums}
-.center{text-align:center}
-.empty{text-align:center;color:var(--muted);padding:30px}
-.daily-key{font-weight:900;color:#174b98}
-.warn{color:var(--red);font-weight:800}
-.foot{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:11px 14px;color:var(--muted);font-size:12px}
-.statusbar{display:none;margin-bottom:12px;padding:10px 12px;border-radius:9px;background:#fff0f1;color:var(--red);font-size:12px;font-weight:700}
-.statusbar.show{display:block}
-.overlay{position:fixed;inset:0;background:rgba(10,27,48,.68);display:flex;align-items:center;justify-content:center;padding:18px;z-index:9999}
-.overlay.hidden{display:none}
-.modal{width:min(1220px,97vw);max-height:95vh;overflow:auto;background:#eef2f7;border-radius:16px;padding:16px;box-shadow:0 25px 70px rgba(0,0,0,.3)}
-.modal-actions{display:flex;justify-content:space-between;align-items:center;gap:10px;position:sticky;top:0;z-index:5;background:#eef2f7;padding:2px 0 10px}
-.modal-title h2{margin:0 0 4px;font-size:22px}
-.modal-title p{margin:0;color:var(--muted);font-size:12px}
-.detail-card{background:#fff;border:1px solid var(--line);border-radius:13px;padding:16px;box-shadow:var(--shadow)}
-.preview-meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px}
-.meta-box{border:1px solid var(--line);border-radius:10px;padding:10px 12px}
-.meta-box small{display:block;color:var(--muted);font-weight:800;margin-bottom:4px}
-.meta-box strong{font-size:15px}
-.preview-table{min-width:1080px}
-.preview-table td,.preview-table th{font-size:12px}
-.totals{margin-top:16px;margin-left:auto;width:min(600px,100%);border-top:3px solid #2456a6;padding-top:7px}
-.total-row{display:flex;justify-content:space-between;gap:16px;padding:7px 8px;border-bottom:1px solid #e2e8f0;font-size:13px}
-.total-row.key{background:#eef5ff;color:#143d78;font-size:15px;font-weight:900}
-.note{font-size:12px;color:#6d7d91;padding:12px 14px;border-top:1px solid var(--line);background:#fafcff}
-@media(max-width:900px){.cards{grid-template-columns:repeat(2,1fr)}.filters{grid-template-columns:1fr 1fr}.preview-meta{grid-template-columns:1fr 1fr}.topbar{align-items:flex-start;flex-direction:column}}
-@media(max-width:560px){body{padding:10px}.cards{grid-template-columns:1fr 1fr;gap:8px}.card{padding:11px}.card strong{font-size:18px}.filters{grid-template-columns:1fr}.preview-meta{grid-template-columns:1fr}.modal-actions{align-items:flex-start;flex-direction:column}}
+table{width:100%;border-collapse:collapse;min-width:1420px}
+th,td{padding:8px 8px;border-bottom:1px solid #e7edf4;text-align:left;font-size:12px;white-space:nowrap}
+th{background:#5b38a0;color:#fff;font-size:11px;position:sticky;top:0;z-index:2}
+tbody tr:hover{background:#faf8ff}.money{text-align:right;font-variant-numeric:tabular-nums}.center{text-align:center}
+.cashusd{font-weight:900;color:#12623d}.cashkhr{font-weight:900;color:#754e00}
+.badge{display:inline-flex;padding:5px 8px;border-radius:999px;font-size:10px;font-weight:900;background:#edf7f1;color:#198754}
+.empty{text-align:center!important;color:var(--muted);padding:28px!important}
+.foot{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;color:var(--muted);font-size:11px}
+.pagination{display:flex;align-items:center;gap:6px}.pagebtn{border:1px solid var(--line);background:#fff;border-radius:7px;padding:6px 9px;font-weight:800;cursor:pointer}.pagebtn.active{background:var(--purple);color:#fff}
+.statusbar{display:none;margin-bottom:10px;padding:9px 11px;border-radius:8px;background:#fff0f1;color:#c93c46;font-size:12px;font-weight:700}.statusbar.show{display:block}
+.overlay{position:fixed;inset:0;background:rgba(10,27,48,.68);display:flex;align-items:center;justify-content:center;padding:18px;z-index:9999}.overlay.hidden{display:none}
+.modal{width:min(1280px,97vw);max-height:94vh;overflow:auto;background:#f4f7fb;border-radius:15px;padding:14px;box-shadow:0 25px 70px rgba(0,0,0,.3)}
+.modalhead{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:10px}.modalhead h2{margin:0 0 4px}.modalhead p{margin:0;color:var(--muted);font-size:12px}
+.detail{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px}
+.meta{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-bottom:12px}.metabox{border:1px solid var(--line);border-radius:9px;padding:9px}.metabox small{display:block;color:var(--muted);font-weight:800;font-size:10px;margin-bottom:4px}.metabox strong{font-size:14px}
+.previewtable{min-width:1050px}.previewtable th{background:#f2edff;color:#4b2f8d;position:static}
+@media(max-width:1050px){.cards{grid-template-columns:repeat(3,1fr)}.filters{grid-template-columns:1fr 1fr 1fr}.meta{grid-template-columns:1fr 1fr 1fr}}
+@media(max-width:650px){body{padding:9px}.topbar{align-items:flex-start;flex-direction:column}.cards{grid-template-columns:1fr 1fr}.filters{grid-template-columns:1fr 1fr}.meta{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="topbar">
     <div>
-      <h1>Daily Receivable Cash Summary</h1>
-      <p class="subtitle">Approved A/R cash collections grouped by Payment Date + Salesman + Location Name.</p>
+      <h1>Daily Receivable Cash Collection</h1>
+      <p class="subtitle">Invoice-by-invoice approved Receivable collections. Physical USD/KHR is captured once per Payment ID and linked to the original Credit invoice.</p>
     </div>
     <span class="pill">Payment Source = Receivable</span>
   </div>
@@ -77,85 +58,69 @@ tbody tr:hover{background:#f9fbfe}
   <div id="errorBox" class="statusbar"></div>
 
   <div class="cards">
-    <div class="card"><small>Receivable Groups</small><strong id="cardGroups">0</strong></div>
-    <div class="card"><small>Receivable USD</small><strong id="cardUsd">$0.00</strong></div>
-    <div class="card"><small>Receivable KHR</small><strong id="cardKhr">៛0</strong></div>
-    <div class="card"><small>Daily Receivable Cash in USD</small><strong id="cardDailyUsd">$0.00</strong></div>
+    <div class="card"><small>Receivable Invoice Lines</small><strong id="cardLines">0</strong></div>
+    <div class="card"><small>Cash Receipts</small><strong id="cardPayments">0</strong></div>
+    <div class="card"><small>Physical Cash USD</small><strong id="cardUsd">$0.00</strong></div>
+    <div class="card"><small>Physical Cash KHR</small><strong id="cardKhr">៛0</strong></div>
+    <div class="card"><small>Customers</small><strong id="cardCustomers">0</strong></div>
   </div>
 
   <div class="panel">
     <div class="filters">
-      <input type="date" id="dateFrom" onchange="applyFilters()" title="Date From">
-      <input type="date" id="dateTo" onchange="applyFilters()" title="Date To">
-      <select id="salesmanFilter" onchange="applyFilters()"><option value="">All Salesmen</option></select>
-      <select id="locationFilter" onchange="applyFilters()"><option value="">All Locations</option></select>
+      <input type="date" id="dateFrom" onchange="filterChanged()" title="Receive Date From">
+      <input type="date" id="dateTo" onchange="filterChanged()" title="Receive Date To">
+      <select id="salesmanFilter" onchange="filterChanged()"><option value="">All Salesmen</option></select>
+      <select id="locationFilter" onchange="filterChanged()"><option value="">All Locations</option></select>
       <button class="btn secondary" onclick="clearFilters()">Clear</button>
-      <button class="btn primary" id="refreshBtn" onclick="loadPayments(true,false)">↻ Refresh</button>
+      <button class="btn primary" onclick="loadData(true)">↻ Refresh</button>
     </div>
 
     <div class="tablewrap">
       <table>
         <thead>
           <tr>
-            <th>Collection Date</th>
-            <th>Salesman</th>
+            <th>Receive Date</th>
+            <th>Payment ID</th>
+            <th>Invoice No</th>
+            <th>Invoice Date</th>
+            <th>Customer Name</th>
+            <th>Salesman Name</th>
             <th>Location Name</th>
-            <th class="center">Payment Count</th>
-            <th class="money">Receivable USD</th>
-            <th class="money">Receivable KHR</th>
-            <th class="money">Avg. KHR Rate</th>
-            <th class="money">Daily Receivable Cash in USD</th>
+            <th>Payment Method</th>
+            <th>Invoice Currency</th>
+            <th class="money">Receivable Applied</th>
+            <th class="money">Cash Received USD</th>
+            <th class="money">Cash Received KHR</th>
+            <th>Status</th>
             <th>Action</th>
           </tr>
         </thead>
-        <tbody id="summaryBody">
-          <tr><td colspan="9" class="empty">Loading Daily Receivable Cash Summary...</td></tr>
-        </tbody>
+        <tbody id="body"><tr><td colspan="14" class="empty">Loading Daily Receivable Cash Collection...</td></tr></tbody>
       </table>
     </div>
 
     <div class="foot">
-      <span id="rowCount">0 receivable groups</span>
+      <span id="rowCount">0 invoice lines</span>
+      <div class="pagination" id="pagination"></div>
       <span id="syncStatus">Smart Sync</span>
-    </div>
-
-    <div class="note">
-      Daily Receivable Cash = Receivable USD + (Receivable KHR ÷ Average Exchange Rate). Only Payments rows with Payment Source = Receivable are included.
     </div>
   </div>
 </div>
 
 <div class="overlay hidden" id="previewOverlay">
   <div class="modal">
-    <div class="modal-actions">
-      <div class="modal-title">
-        <h2>Daily Receivable Cash Preview</h2>
-        <p id="previewSubtitle"></p>
-      </div>
+    <div class="modalhead">
+      <div><h2>Receivable Cash Collection Detail</h2><p id="previewSubtitle"></p></div>
       <button class="btn secondary" onclick="closePreview()">✕ Close</button>
     </div>
-
-    <div class="detail-card">
-      <div class="preview-meta" id="previewMeta"></div>
+    <div class="detail">
+      <div class="meta" id="previewMeta"></div>
       <div class="tablewrap">
-        <table class="preview-table">
-          <thead>
-            <tr>
-              <th>Payment ID</th>
-              <th>Invoice No</th>
-              <th>Customer</th>
-              <th>Payment Method</th>
-              <th>Currency</th>
-              <th class="money">Exchange Rate</th>
-              <th class="money">Amount</th>
-              <th>Transaction ID</th>
-              <th>Approved By</th>
-            </tr>
-          </thead>
+        <table class="previewtable">
+          <thead><tr><th>Invoice No</th><th>Invoice Date</th><th>Customer</th><th>Salesman</th><th>Location</th><th>Currency</th><th class="money">Applied Amount</th></tr></thead>
           <tbody id="previewBody"></tbody>
         </table>
       </div>
-      <div class="totals" id="previewTotals"></div>
     </div>
   </div>
 </div>
@@ -163,494 +128,175 @@ tbody tr:hover{background:#f9fbfe}
 <script>
 const SALES_API="https://script.google.com/macros/s/AKfycbyM5mUlz5SeMZ_oPJCo2FgLkPEcodAQ7wPl5wxAdrvfqLvsZLaHxiOtS02L1Q3ZRA3D/exec";
 const MASTER_API="https://script.google.com/macros/s/AKfycbzIjs-cNehMxWTZs3ZPAosseGUu1nqACTPo3S4-onLLEYnEgqP6AUK7p3jwb6MaFr7H0w/exec";
-
-const CACHE_KEY="BB_DAILY_RECEIVABLE_CASH_SUMMARY_CACHE_V1_1";
-const SYNC_INTERVAL_MS=20000;
-
+const CACHE_KEY="BB_DAILY_RECEIVABLE_CASH_COLLECTION_V2";
+const PAGE_SIZE=20;
+const SYNC_MS=20000;
 const $=id=>document.getElementById(id);
 
-let payments=[];
-let groups=[];
-let filteredGroups=[];
-let currentGroup=null;
-let locationMap={};
-let lastRevision="";
-let syncBusy=false;
-let syncTimer=null;
+let rows=[],filtered=[],locationMap={},page=1,lastRevision="",syncBusy=false,syncTimer=null;
 
-function esc(v){
-  return String(v??"").replace(/[&<>"']/g,m=>({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  }[m]));
-}
-
-function num(v){
-  const n=Number(v);
-  return Number.isFinite(n)?n:0;
-}
-
-function dateOnly(v){
-  if(!v) return "";
-  const s=String(v);
-  const iso=s.match(/^(\d{4}-\d{2}-\d{2})/);
-  if(iso) return iso[1];
-
-  const d=new Date(s);
-  if(!isNaN(d)){
-    const y=d.getFullYear();
-    const m=String(d.getMonth()+1).padStart(2,"0");
-    const day=String(d.getDate()).padStart(2,"0");
-    return `${y}-${m}-${day}`;
-  }
-  return s.slice(0,10);
-}
-
-function usd(v){
-  return "$"+num(v).toLocaleString(undefined,{
-    minimumFractionDigits:2,
-    maximumFractionDigits:2
-  });
-}
-
-function khr(v){
-  return "៛"+num(v).toLocaleString(undefined,{
-    minimumFractionDigits:0,
-    maximumFractionDigits:0
-  });
-}
-
-function rate(v){
-  return num(v).toLocaleString(undefined,{
-    minimumFractionDigits:0,
-    maximumFractionDigits:2
-  });
-}
-
-function showError(msg){
-  $("errorBox").textContent=msg||"";
-  $("errorBox").classList.toggle("show",!!msg);
-}
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+function num(v){const n=Number(v);return Number.isFinite(n)?n:0}
+function usd(v){return "$"+num(v).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}
+function khr(v){return "៛"+Math.round(num(v)).toLocaleString()}
+function showError(m){$("errorBox").textContent=m||"";$("errorBox").classList.toggle("show",!!m)}
+function locName(code){const c=String(code||"").trim();return locationMap[c.toLowerCase()]||c||"-"}
 
 async function fetchJson(url,params){
-  const res=await fetch(
-    url+"?"+new URLSearchParams(params).toString(),
-    {cache:"no-store"}
-  );
-  if(!res.ok) throw new Error("HTTP "+res.status);
-  const d=await res.json();
-  if(d?.success===false) throw new Error(d.error||"Database error.");
+  const r=await fetch(url+"?"+new URLSearchParams(params),{cache:"no-store"});
+  if(!r.ok)throw new Error("HTTP "+r.status);
+  const d=await r.json();
+  if(d?.success===false)throw new Error(d.error||"Database error.");
   return d;
 }
 
-function arrayOf(d){
-  if(Array.isArray(d)) return d;
-  if(Array.isArray(d?.payments)) return d.payments;
-  if(Array.isArray(d?.data)) return d.data;
-  return [];
-}
-
-async function loadLocationMap(){
+async function loadLocations(){
   try{
     const d=await fetchJson(MASTER_API,{action:"getLocations"});
-    const rows=Array.isArray(d)?d:(Array.isArray(d?.data)?d.data:(Array.isArray(d?.locations)?d.locations:[]));
-    const map={};
-    rows.forEach(row=>{
-      const code=String(row?.locationCode||row?.code||"").trim();
-      const name=String(row?.locationName||row?.name||code).trim();
-      if(code) map[code.toLowerCase()]=name||code;
+    const a=Array.isArray(d)?d:(d.locations||d.data||[]);
+    locationMap={};
+    a.forEach(x=>{
+      const code=String(x.locationCode||x.code||"").trim();
+      const name=String(x.locationName||x.name||code).trim();
+      if(code)locationMap[code.toLowerCase()]=name||code;
     });
-    locationMap=map;
-  }catch(error){
-    console.warn("Location lookup unavailable:",error);
-  }
+  }catch(_){}
 }
 
-function locationNameFromCode(code){
-  const key=String(code||"").trim().toLowerCase();
-  if(key==="multi") return "Multiple Locations";
-  return locationMap[key] || String(code||"").trim() || "-";
+function saveCache(){
+  try{localStorage.setItem(CACHE_KEY,JSON.stringify({rows,lastRevision,t:Date.now()}))}catch(_){}
+}
+function showCache(){
+  try{
+    const c=JSON.parse(localStorage.getItem(CACHE_KEY)||"null");
+    if(c&&Array.isArray(c.rows)){rows=c.rows;lastRevision=c.lastRevision||"";populateFilters();applyFilters();}
+  }catch(_){}
 }
 
-function isReceivablePayment(p){
-  return String(p.paymentSource||p.source||"").trim().toLowerCase()==="receivable";
-}
-
-function groupKey(p){
-  return [
-    dateOnly(p.paymentDate),
-    String(p.salesperson||p.enteredBySalesman||"").trim(),
-    String(p.locationCode||"").trim()
-  ].join("|||");
-}
-
-function calculateGroup(list){
-  const valid=list.filter(isReceivablePayment);
-  const first=valid[0]||{};
-
-  let totalUSD=0;
-  let totalKHR=0;
-  const khrRates=[];
-  let missingKHRRate=false;
-
-  valid.forEach(p=>{
-    const currency=String(p.currency||"USD").toUpperCase();
-    const amount=num(p.amount);
-
-    if(currency==="KHR"){
-      totalKHR+=amount;
-      const r=num(p.exchangeRate);
-      if(r>0) khrRates.push(r);
-      else missingKHRRate=true;
-    }else{
-      totalUSD+=amount;
-    }
+function paymentOwners(list){
+  const seen=new Set();
+  return list.filter(r=>{
+    const id=String(r.paymentId||"");
+    if(!id||seen.has(id))return false;
+    seen.add(id);return true;
   });
-
-  const khrCount=valid.filter(p=>
-    String(p.currency||"USD").toUpperCase()==="KHR" &&
-    num(p.amount)>0
-  ).length;
-
-  const avgRate=khrRates.length
-    ? khrRates.reduce((a,b)=>a+b,0)/khrRates.length
-    : 0;
-
-  const hasKHR=totalKHR>0;
-  const rateComplete=!hasKHR || (
-    !missingKHRRate &&
-    avgRate>0 &&
-    khrRates.length===khrCount
-  );
-
-  const dailyUSD=rateComplete
-    ? totalUSD + (hasKHR ? totalKHR/avgRate : 0)
-    : null;
-
-  return {
-    key:groupKey(first),
-    date:dateOnly(first.paymentDate),
-    salesman:String(first.salesperson||first.enteredBySalesman||"").trim()||"-",
-    locationCode:String(first.locationCode||"").trim()||"-",
-    locationName:locationNameFromCode(first.locationCode),
-    count:new Set(valid.map(p=>String(p.paymentId||p.reportingLineId||"")).filter(Boolean)).size || valid.length,
-    lineCount:valid.length,
-    totalUSD,
-    totalKHR,
-    avgRate,
-    rateComplete,
-    dailyUSD,
-    payments:valid.slice().sort(
-      (a,b)=>String(a.paymentId||"").localeCompare(String(b.paymentId||""))
-    )
-  };
-}
-
-function buildGroups(){
-  const map=new Map();
-
-  payments.filter(isReceivablePayment).forEach(p=>{
-    const key=groupKey(p);
-    if(!map.has(key)) map.set(key,[]);
-    map.get(key).push(p);
-  });
-
-  groups=[...map.values()]
-    .map(calculateGroup)
-    .filter(g=>g.count>0)
-    .sort((a,b)=>
-      b.date.localeCompare(a.date) ||
-      a.salesman.localeCompare(b.salesman) ||
-      a.locationName.localeCompare(b.locationName)
-    );
-
-  populateFilters();
-  applyFilters();
 }
 
 function populateFilters(){
-  const sales=[...new Set(
-    groups.map(g=>g.salesman).filter(v=>v&&v!=="-")
-  )].sort();
-
-  const locs=[...new Set(
-    groups.map(g=>g.locationName).filter(v=>v&&v!=="-")
-  )].sort();
-
-  const s=$("salesmanFilter");
-  const l=$("locationFilter");
-  const sv=s.value;
-  const lv=l.value;
-
-  s.innerHTML='<option value="">All Salesmen</option>'+
-    sales.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join("");
-
-  l.innerHTML='<option value="">All Locations</option>'+
-    locs.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join("");
-
-  if(sales.includes(sv)) s.value=sv;
-  if(locs.includes(lv)) l.value=lv;
+  const sales=[...new Set(rows.map(r=>r.salesperson).filter(Boolean))].sort();
+  const locs=[...new Set(rows.map(r=>r.locationCode).filter(Boolean))].sort();
+  const s=$("salesmanFilter"),l=$("locationFilter"),sv=s.value,lv=l.value;
+  s.innerHTML='<option value="">All Salesmen</option>'+sales.map(x=>`<option>${esc(x)}</option>`).join("");
+  l.innerHTML='<option value="">All Locations</option>'+locs.map(x=>`<option value="${esc(x)}">${esc(locName(x))}</option>`).join("");
+  if(sales.includes(sv))s.value=sv;if(locs.includes(lv))l.value=lv;
 }
 
+function filterChanged(){page=1;applyFilters()}
+function clearFilters(){$("dateFrom").value="";$("dateTo").value="";$("salesmanFilter").value="";$("locationFilter").value="";page=1;applyFilters()}
+
 function applyFilters(){
-  const f=$("dateFrom").value;
-  const t=$("dateTo").value;
-  const s=$("salesmanFilter").value;
-  const l=$("locationFilter").value;
-
-  filteredGroups=groups.filter(g=>
-    (!f||g.date>=f) &&
-    (!t||g.date<=t) &&
-    (!s||g.salesman===s) &&
-    (!l||g.locationName===l)
+  const f=$("dateFrom").value,t=$("dateTo").value,s=$("salesmanFilter").value,l=$("locationFilter").value;
+  filtered=rows.filter(r=>
+    (!f||String(r.paymentDate)>=f)&&(!t||String(r.paymentDate)<=t)&&
+    (!s||r.salesperson===s)&&(!l||r.locationCode===l)
   );
-
+  const pages=Math.max(1,Math.ceil(filtered.length/PAGE_SIZE));if(page>pages)page=pages;
   render();
 }
 
 function render(){
-  $("rowCount").textContent=
-    `${filteredGroups.length} receivable group${filteredGroups.length===1?"":"s"}`;
+  const owners=paymentOwners(filtered);
+  const customers=new Set(filtered.map(r=>String(r.customer||"").toLowerCase()).filter(Boolean));
+  $("cardLines").textContent=filtered.length;
+  $("cardPayments").textContent=owners.length;
+  $("cardUsd").textContent=usd(owners.reduce((s,r)=>s+num(r.physicalCashUSD),0));
+  $("cardKhr").textContent=khr(owners.reduce((s,r)=>s+num(r.physicalCashKHR),0));
+  $("cardCustomers").textContent=customers.size;
+  $("rowCount").textContent=`${filtered.length} invoice line${filtered.length===1?"":"s"}`;
 
-  $("cardGroups").textContent=filteredGroups.length;
+  const start=(page-1)*PAGE_SIZE,view=filtered.slice(start,start+PAGE_SIZE);
+  const shownPaymentIds=new Set();
 
-  const usdTotal=filteredGroups.reduce((x,g)=>x+g.totalUSD,0);
-  const khrTotal=filteredGroups.reduce((x,g)=>x+g.totalKHR,0);
-  const complete=filteredGroups.every(g=>g.rateComplete);
-  const dailyTotal=filteredGroups.reduce(
-    (x,g)=>x+(g.dailyUSD==null?0:g.dailyUSD),0
-  );
-
-  $("cardUsd").textContent=usd(usdTotal);
-  $("cardKhr").textContent=khr(khrTotal);
-  $("cardDailyUsd").textContent=complete?usd(dailyTotal):"Rate Missing";
-
-  if(!filteredGroups.length){
-    $("summaryBody").innerHTML=
-      '<tr><td colspan="9" class="empty">No Receivable cash collections found.</td></tr>';
-    return;
-  }
-
-  $("summaryBody").innerHTML=filteredGroups.map(g=>`
-    <tr>
-      <td><strong>${esc(g.date)}</strong></td>
-      <td>${esc(g.salesman)}</td>
-      <td><strong>${esc(g.locationName)}</strong></td>
-      <td class="center">${g.count}</td>
-      <td class="money">${usd(g.totalUSD)}</td>
-      <td class="money">${khr(g.totalKHR)}</td>
-      <td class="money ${g.rateComplete?"":"warn"}">
-        ${g.totalKHR?(g.rateComplete?rate(g.avgRate):"Missing Rate"):"-"}
-      </td>
-      <td class="money daily-key">${g.dailyUSD==null?"—":usd(g.dailyUSD)}</td>
-      <td><button class="btn primary" onclick='openPreview(${JSON.stringify(g.key)})'>Preview</button></td>
-    </tr>
-  `).join("");
-}
-
-function clearFilters(){
-  $("dateFrom").value="";
-  $("dateTo").value="";
-  $("salesmanFilter").value="";
-  $("locationFilter").value="";
-  applyFilters();
-}
-
-function readCache(){
-  try{
-    const raw=localStorage.getItem(CACHE_KEY);
-    if(!raw) return null;
-    const d=JSON.parse(raw);
-    if(!d || !Array.isArray(d.payments)) return null;
-    return d;
-  }catch(_){
-    return null;
-  }
-}
-
-function saveCache(){
-  try{
-    localStorage.setItem(CACHE_KEY,JSON.stringify({
-      revision:String(lastRevision||""),
-      savedAt:Date.now(),
-      payments,
-      locationMap
-    }));
-  }catch(_){}
-}
-
-function showCache(){
-  const c=readCache();
-  if(!c) return false;
-
-  lastRevision=String(c.revision||"");
-  payments=c.payments;
-  if(c.locationMap&&typeof c.locationMap==="object") locationMap=c.locationMap;
-  buildGroups();
-  $("syncStatus").textContent="Cached • checking for updates...";
-  return true;
-}
-
-async function getRevision(){
-  const d=await fetchJson(SALES_API,{action:"invoiceHistoryRevision"});
-  return String(d.revision||"0");
-}
-
-async function loadPayments(manual=false,silent=false){
-  const btn=$("refreshBtn");
-
-  if(manual){
-    btn.disabled=true;
-    btn.textContent="Refreshing…";
-  }
-
-  if(!silent){
-    showError("");
-    $("syncStatus").textContent="Loading receivable payments...";
-  }
-
-  try{
-    const [d,revision]=await Promise.all([
-      fetchJson(SALES_API,{action:"dailyReceivableCashPayments"}),
-      getRevision().catch(()=>lastRevision||""),
-      loadLocationMap()
-    ]);
-
-    payments=arrayOf(d).filter(isReceivablePayment);
-    lastRevision=String(revision||lastRevision||"");
-
-    buildGroups();
-    saveCache();
-
-    $("syncStatus").textContent=
-      `Updated • ${payments.length} receivable payment${payments.length===1?"":"s"}`;
-  }catch(e){
-    const c=readCache();
-
-    if(c){
-      payments=c.payments;
-      lastRevision=String(c.revision||lastRevision||"");
-      if(c.locationMap&&typeof c.locationMap==="object") locationMap=c.locationMap;
-      buildGroups();
-      $("syncStatus").textContent="Cached data • sync will retry";
-    }else{
-      showError(e.message||"Could not load receivable payments.");
-      $("summaryBody").innerHTML=
-        '<tr><td colspan="9" class="empty">Could not load Daily Receivable Cash Summary.</td></tr>';
-      $("syncStatus").textContent="Load failed";
-    }
-  }finally{
-    if(manual){
-      btn.disabled=false;
-      btn.textContent="↻ Refresh";
-    }
-  }
-}
-
-async function smartSync(force=false){
-  if(syncBusy) return;
-  if(document.hidden && !force) return;
-
-  syncBusy=true;
-
-  try{
-    const revision=await getRevision();
-
-    if(lastRevision && revision===lastRevision){
-      $("syncStatus").textContent="Up to date • auto sync 20s";
-      return;
-    }
-
-    lastRevision=revision;
-    await loadPayments(false,true);
-    $("syncStatus").textContent="Updated automatically";
-  }catch(_){
-  }finally{
-    syncBusy=false;
-  }
-}
-
-function startSmartSync(){
-  if(syncTimer) clearInterval(syncTimer);
-  syncTimer=setInterval(()=>smartSync(false),SYNC_INTERVAL_MS);
-}
-
-function openPreview(key){
-  currentGroup=groups.find(g=>g.key===key);
-  if(!currentGroup) return;
-
-  const g=currentGroup;
-
-  $("previewSubtitle").textContent=
-    `${g.date} • ${g.salesman} • ${g.locationName}`;
-
-  $("previewMeta").innerHTML=`
-    <div class="meta-box"><small>Collection Date</small><strong>${esc(g.date)}</strong></div>
-    <div class="meta-box"><small>Salesman</small><strong>${esc(g.salesman)}</strong></div>
-    <div class="meta-box"><small>Location Name</small><strong>${esc(g.locationName)}</strong></div>
-    <div class="meta-box"><small>Payment Count</small><strong>${g.count}</strong></div>
-  `;
-
-  $("previewBody").innerHTML=g.payments.map(p=>{
-    const c=String(p.currency||"USD").toUpperCase();
+  $("body").innerHTML=view.length?view.map(r=>{
+    const first=!shownPaymentIds.has(r.paymentId);
+    shownPaymentIds.add(r.paymentId);
     return `<tr>
-      <td><strong>${esc(p.paymentId||"-")}</strong></td>
-      <td>${esc(p.invoiceNo||"-")}</td>
-      <td>${esc(p.customer||"-")}</td>
-      <td>${esc(p.paymentMethod||"-")}</td>
-      <td>${esc(c)}</td>
-      <td class="money">
-        ${c==="KHR"
-          ? (num(p.exchangeRate)>0?rate(p.exchangeRate):'<span class="warn">Missing</span>')
-          : "-"}
-      </td>
-      <td class="money">${c==="KHR"?khr(p.amount):usd(p.amount)}</td>
-      <td>${esc(p.transactionId||"-")}</td>
-      <td>${esc(p.approvedBy||"-")}</td>
+      <td>${esc(r.paymentDate||"-")}</td>
+      <td><strong>${esc(r.paymentId||"-")}</strong></td>
+      <td><strong>${esc(r.invoiceNo||"-")}</strong></td>
+      <td>${esc(r.invoiceDate||"-")}</td>
+      <td>${esc(r.customer||"-")}</td>
+      <td>${esc(r.salesperson||"-")}</td>
+      <td title="${esc(r.locationCode||"")}">${esc(locName(r.locationCode))}</td>
+      <td>${esc(r.paymentMethod||"-")}</td>
+      <td>${esc(r.currency||"-")}</td>
+      <td class="money">${String(r.currency||"USD").toUpperCase()==="KHR"?khr(r.amount):usd(r.amount)}</td>
+      <td class="money cashusd">${first?usd(r.physicalCashUSD):"—"}</td>
+      <td class="money cashkhr">${first?khr(r.physicalCashKHR):"—"}</td>
+      <td><span class="badge">Approved</span></td>
+      <td><button class="btn primary" onclick='openPreview(${JSON.stringify(String(r.paymentId||""))})'>Preview</button></td>
     </tr>`;
-  }).join("");
+  }).join(""):'<tr><td colspan="14" class="empty">No Receivable Cash collections found.</td></tr>';
 
-  const converted=g.dailyUSD==null
-    ? null
-    : (g.totalKHR ? g.totalKHR/g.avgRate : 0);
+  renderPagination();
+}
 
-  $("previewTotals").innerHTML=`
-    <div class="total-row"><span>Receivable USD</span><strong>${usd(g.totalUSD)}</strong></div>
-    <div class="total-row"><span>Receivable KHR</span><strong>${khr(g.totalKHR)}</strong></div>
-    <div class="total-row">
-      <span>Average KHR Exchange Rate</span>
-      <strong class="${g.rateComplete?"":"warn"}">
-        ${g.totalKHR?(g.rateComplete?rate(g.avgRate):"Missing Exchange Rate"):"-"}
-      </strong>
-    </div>
-    <div class="total-row"><span>KHR Converted to USD</span><strong>${converted==null?"—":usd(converted)}</strong></div>
-    <div class="total-row key"><span>Daily Receivable Cash in USD</span><strong>${g.dailyUSD==null?"—":usd(g.dailyUSD)}</strong></div>
-  `;
+function renderPagination(){
+  const pages=Math.max(1,Math.ceil(filtered.length/PAGE_SIZE)),w=$("pagination"),a=[];
+  a.push(`<button class="pagebtn" ${page<=1?"disabled":""} onclick="setPage(${page-1})">‹</button>`);
+  for(let p=1;p<=pages;p++){
+    if(p===1||p===pages||Math.abs(p-page)<=1)a.push(`<button class="pagebtn ${p===page?"active":""}" onclick="setPage(${p})">${p}</button>`);
+    else if(!a[a.length-1]?.includes("…"))a.push("<span>…</span>");
+  }
+  a.push(`<button class="pagebtn" ${page>=pages?"disabled":""} onclick="setPage(${page+1})">›</button>`);
+  w.innerHTML=a.join("");
+}
+function setPage(p){const pages=Math.max(1,Math.ceil(filtered.length/PAGE_SIZE));page=Math.min(Math.max(1,p),pages);render()}
 
+function openPreview(paymentId){
+  const list=rows.filter(r=>String(r.paymentId)===String(paymentId));
+  if(!list.length)return;
+  const p=list[0];
+  $("previewSubtitle").textContent=`${paymentId} · ${p.paymentDate||"-"} · ${p.salesperson||"-"}`;
+  $("previewMeta").innerHTML=`
+    <div class="metabox"><small>Payment ID</small><strong>${esc(paymentId)}</strong></div>
+    <div class="metabox"><small>Receive Date</small><strong>${esc(p.paymentDate||"-")}</strong></div>
+    <div class="metabox"><small>Invoice Count</small><strong>${list.length}</strong></div>
+    <div class="metabox"><small>Physical Cash USD</small><strong>${usd(p.physicalCashUSD)}</strong></div>
+    <div class="metabox"><small>Physical Cash KHR</small><strong>${khr(p.physicalCashKHR)}</strong></div>`;
+  $("previewBody").innerHTML=list.map(r=>`<tr>
+    <td>${esc(r.invoiceNo||"-")}</td><td>${esc(r.invoiceDate||"-")}</td><td>${esc(r.customer||"-")}</td>
+    <td>${esc(r.salesperson||"-")}</td><td>${esc(locName(r.locationCode))}</td><td>${esc(r.currency||"-")}</td>
+    <td class="money">${String(r.currency||"USD").toUpperCase()==="KHR"?khr(r.amount):usd(r.amount)}</td>
+  </tr>`).join("");
   $("previewOverlay").classList.remove("hidden");
 }
+function closePreview(){$("previewOverlay").classList.add("hidden")}
 
-function closePreview(){
-  $("previewOverlay").classList.add("hidden");
-  currentGroup=null;
+async function loadData(force=false){
+  if(syncBusy)return;syncBusy=true;
+  $("syncStatus").textContent=force?"Refreshing…":"Syncing…";
+  try{
+    const d=await fetchJson(SALES_API,{action:"dailyReceivableCashCollection",_t:Date.now()});
+    rows=Array.isArray(d.payments)?d.payments:[];
+    lastRevision=d.revision||lastRevision;
+    populateFilters();applyFilters();saveCache();showError("");
+    $("syncStatus").textContent="Up to date · smart sync 20s";
+  }catch(e){
+    showError(e.message||"Could not load Daily Receivable Cash Collection.");
+    $("syncStatus").textContent="Using cached data";
+  }finally{syncBusy=false}
 }
 
+async function smartSync(){await loadData(false)}
+
 (async function init(){
-  const cached=showCache();
-
-  if(cached){
-    await loadLocationMap();
-    buildGroups();
-    await smartSync(true);
-  }else{
-    await loadPayments(false,false);
-  }
-
-  startSmartSync();
+  showCache();
+  await loadLocations();
+  populateFilters();applyFilters();
+  await loadData(false);
+  syncTimer=setInterval(smartSync,SYNC_MS);
 })();
-
-document.addEventListener("visibilitychange",()=>{
-  if(!document.hidden) smartSync(true);
-});
 </script>
 </body>
 </html>
