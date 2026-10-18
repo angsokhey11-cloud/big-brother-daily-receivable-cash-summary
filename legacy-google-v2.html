@@ -144,6 +144,15 @@ function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&l
 function num(v){const n=Number(v);return Number.isFinite(n)?n:0}
 function usd(v){return "$"+num(v).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}
 function khr(v){return "៛"+Math.round(num(v)).toLocaleString()}
+function cashShowDate(value){
+ const raw=String(value??'').trim();
+ if(!raw)return '-';
+ const m=raw.match(/^(\d{4})-(\d{2})-(\d{2})(?=$|T|\s)/);
+ const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+ if(m){const mon=Number(m[2]),day=Number(m[3]);if(mon>=1&&mon<=12&&day>=1&&day<=31)return m[3]+'-'+months[mon-1]+'-'+m[1];}
+ const parsed=new Date(raw);
+ return Number.isNaN(parsed.getTime())?raw:parsed.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric',timeZone:'Asia/Phnom_Penh'}).replace(/ /g,'-');
+}
 function showError(m){$("errorBox").textContent=m||"";$("errorBox").classList.toggle("show",!!m)}
 function locName(code){const c=String(code||"").trim();return locationMap[c.toLowerCase()]||c||"-"}
 
@@ -226,10 +235,10 @@ function render(){
     const first=!shownPaymentIds.has(r.paymentId);
     shownPaymentIds.add(r.paymentId);
     return `<tr>
-      <td>${esc(r.paymentDate||"-")}</td>
+      <td>${esc(cashShowDate(r.paymentDate))}</td>
       <td><strong>${esc(r.paymentId||"-")}</strong></td>
       <td><strong>${esc(r.invoiceNo||"-")}</strong></td>
-      <td>${esc(r.invoiceDate||"-")}</td>
+      <td>${esc(cashShowDate(r.invoiceDate))}</td>
       <td>${esc(r.customer||"-")}</td>
       <td>${esc(r.salesperson||"-")}</td>
       <td title="${esc(r.locationCode||"")}">${esc(locName(r.locationCode))}</td>
@@ -262,15 +271,15 @@ function openPreview(paymentId){
   const list=rows.filter(r=>String(r.paymentId)===String(paymentId));
   if(!list.length)return;
   const p=list[0];
-  $("previewSubtitle").textContent=`${paymentId} · ${p.paymentDate||"-"} · ${p.salesperson||"-"}`;
+  $("previewSubtitle").textContent=`${paymentId} · ${cashShowDate(p.paymentDate)} · ${p.salesperson||"-"}`;
   $("previewMeta").innerHTML=`
     <div class="metabox"><small>Payment ID</small><strong>${esc(paymentId)}</strong></div>
-    <div class="metabox"><small>Receive Date</small><strong>${esc(p.paymentDate||"-")}</strong></div>
+    <div class="metabox"><small>Receive Date</small><strong>${esc(cashShowDate(p.paymentDate))}</strong></div>
     <div class="metabox"><small>Invoice Count</small><strong>${list.length}</strong></div>
     <div class="metabox"><small>Physical Cash USD</small><strong>${usd(p.physicalCashUSD)}</strong></div>
     <div class="metabox"><small>Physical Cash KHR</small><strong>${khr(p.physicalCashKHR)}</strong></div>`;
   $("previewBody").innerHTML=list.map(r=>`<tr>
-    <td>${esc(r.invoiceNo||"-")}</td><td>${esc(r.invoiceDate||"-")}</td><td>${esc(r.customer||"-")}</td>
+    <td>${esc(r.invoiceNo||"-")}</td><td>${esc(cashShowDate(r.invoiceDate))}</td><td>${esc(r.customer||"-")}</td>
     <td>${esc(r.salesperson||"-")}</td><td>${esc(locName(r.locationCode))}</td><td>${esc(r.currency||"-")}</td>
     <td class="money">${String(r.currency||"USD").toUpperCase()==="KHR"?khr(r.amount):usd(r.amount)}</td>
   </tr>`).join("");
