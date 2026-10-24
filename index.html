@@ -10,7 +10,7 @@
 <script>
 (async function(){
   try{
-    const response=await fetch('legacy-google-v2.html?v=20261018-date1',{cache:'no-store'});
+    const response=await fetch('legacy-google-v2.html?v=20261018-date1',{cache:'default'});
     if(!response.ok)throw new Error('Could not load Receivable Cash Summary source.');
     let html=await response.text();
 
